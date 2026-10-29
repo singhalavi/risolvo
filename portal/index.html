@@ -924,6 +924,23 @@ body.question-bank-focus .wrap{padding-top:16px}
 				 </iframe>
 			</noscript>
 
+        <header class="site-header">
+          <nav class="nav" aria-label="Main navigation">
+            <a class="brand" href="/" aria-label="Risolvo home"><img src="/assets/risolvo-logo.png" alt=""><span>Risolvo<em>.</em></span></a>
+            <div class="nav-links">
+              <a href="/">Home</a>
+              <a href="/about-us/">About Us</a>
+              <a href="/contact/">Contact</a>
+              <a class="portal-link" href="/portal/" aria-current="page">Student Portal</a>
+            </div>
+            <div class="portal-account" aria-label="Account controls">
+              <span id="whoPill" class="pill" style="display:none"></span>
+              <button id="btnLogout" class="portal-logout" type="button" style="display:none">Log out</button>
+            </div>
+          </nav>
+        </header>
+<div class="portal-header-spacer" aria-hidden="true"></div>
+<script>(function(){const header=document.querySelector(".site-header"),spacer=document.querySelector(".portal-header-spacer");if(!header||!spacer)return;const sync=()=>{spacer.style.height=header.offsetHeight+"px"};sync();if("ResizeObserver"in window)new ResizeObserver(sync).observe(header);window.addEventListener("resize",sync)})();</script>
 <div class="wnd-page l-page cs-deep ac-7f0d0d ac-dark t-t-fs-m t-t-fw-m t-t-sp-n t-t-d-s t-s-fs-m t-s-fw-m t-s-sp-n t-s-d-n t-p-fs-m t-p-fw-l t-p-sp-n t-h-fs-m t-h-fw-m t-h-sp-n t-bq-fs-m t-bq-fw-m t-bq-sp-n t-bq-d-q t-btn-fw-l t-nav-fw-l t-pd-fw-l t-nav-tt-n">
     <div class="l-w t cf t-19">
         <div class="l-bg cf">
@@ -932,21 +949,7 @@ body.question-bank-focus .wrap{padding-top:16px}
                 
             </div>
         </div>
-        <header class="site-header">
-          <nav class="nav" aria-label="Main navigation">
-            <a class="brand" href="/" aria-label="Risolvo home"><img src="/assets/risolvo-logo.png" alt=""><span>Risolvo<em>.</em></span></a>
-            <div class="nav-links">
-              <a href="/">Home</a>
-              <a href="/about-us/">About Us</a>
-              <a href="/contact/">Contact</a>
-              <a class="portal-link" href="/portal/" aria-current="page">Student Portal&nbsp; ↗</a>
-            </div>
-            <div class="portal-account" aria-label="Account controls">
-              <span id="whoPill" class="pill" style="display:none"></span>
-              <button id="btnLogout" class="portal-logout" type="button" style="display:none">Log out</button>
-            </div>
-          </nav>
-        </header>
+
         <main class="l-m cf">
 <div class="wrap">
   <div id="auth-loading" class="auth-loading" role="status" aria-live="polite">
@@ -1320,7 +1323,8 @@ body.question-bank-focus .wrap{padding-top:16px}
         </style>
         <style>
           .site-footer{padding:27px 24px;background:#041326;color:#a9b8cb;text-align:center;font-size:.9rem}.site-footer a{color:#fff;text-decoration:none;margin:0 8px}.site-footer a:hover{color:#ff8a00}.portal-footer-social{margin-top:8px}.portal-footer-social a{color:#bdc9d8;font-size:.82rem}
-          .site-header{position:sticky;top:0;z-index:50;background:rgba(4,19,38,.98);color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
+          .site-header{position:fixed!important;inset:0 0 auto;z-index:1000;margin:0!important;background:rgba(4,19,38,.98);color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
+          .portal-header-spacer{height:82px}.wnd-page,.l-w.t.cf.t-19{margin-block-start:0!important;padding-block-start:0!important}.l-bg{display:none!important}
           .site-header .nav{width:min(1160px,100% - 48px);min-height:82px;margin:auto;padding:12px 0;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
           .site-header .brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:800;font-size:1.16rem;letter-spacing:-.035em;color:#fff}
           .site-header .brand img{width:48px;height:48px;object-fit:cover;border-radius:50%;box-shadow:0 0 22px rgba(255,138,0,.24)}
@@ -1328,8 +1332,7 @@ body.question-bank-focus .wrap{padding-top:16px}
           .site-header .nav-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
           .site-header .nav-links a{padding:9px 13px;border-radius:8px;color:#d4deeb;text-decoration:none;font-weight:650;font-size:.94rem;transition:background .2s,color .2s}
           .site-header .nav-links a:hover,.site-header .nav-links a:focus-visible{color:#fff;background:rgba(255,255,255,.09);outline:none}
-          .site-header .nav-links a.portal-link{color:#101b2b;background:#ff8a00;box-shadow:0 7px 20px rgba(255,138,0,.2)}
-          .site-header .nav-links a.portal-link:hover{background:#ff9d1d}
+          
           .portal-account{display:flex;align-items:center;gap:10px}
           .portal-account .pill{max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.24);color:#fff}
           .portal-account .pill-admin{background:#fff;color:#071d39;border-color:#fff}.portal-account .pill-student{background:#e9fbf3;color:#0b7a5e;border-color:#bfe9d9}
@@ -1341,9 +1344,9 @@ body.question-bank-focus .wrap{padding-top:16px}
           .portal-progress-track i{background:#ff8a00}.portal-progress-row.needs-revision .portal-progress-track i{background:#ffb21b}
           .portal-login-submit{background:#ff8a00;color:#101b2b}.portal-login-submit:hover{background:#ff9d1d}
           .portal-forgot-password{color:#0d2b50}.portal-login-field input:focus{border-color:#ff8a00;box-shadow:0 0 0 3px rgba(255,138,0,.16)}
-          @media(max-width:720px){.site-header .nav{width:calc(100% - 32px);min-height:72px;padding:12px 0}.site-header .nav-links{width:100%;justify-content:space-between}.site-header .nav-links a{padding:8px 7px;font-size:.82rem}.site-header .nav-links a.portal-link{padding:8px 10px}.portal-account{margin-left:auto}}
+          @media(max-width:720px){.site-header .nav{width:calc(100% - 32px);min-height:72px;padding:12px 0}.site-header .nav-links{width:100%;justify-content:space-between}.site-header .nav-links a{padding:8px 7px;font-size:.82rem}.portal-account{margin-left:auto}}
         </style>
-        <footer class="site-footer">© Risolvo <span aria-hidden="true">·</span> <a href="/about-us/">About Us</a><a href="/contact/">Contact</a><a href="/portal/" aria-current="page">Student Portal</a><div class="portal-footer-social"><a href="https://www.youtube.com/@Risolvo">YouTube</a><a href="https://www.instagram.com/risolvouk/">Instagram</a><a href="https://www.tiktok.com/@RisolvoStudio">TikTok</a><a href="https://www.facebook.com/RisolvoUK/">Facebook</a></div></footer>
+        <footer class="site-footer">© Risolvo <span aria-hidden="true">·</span> <a href="/about-us/">About Us</a><a href="/contact/">Contact</a><div class="portal-footer-social"><a href="https://www.youtube.com/@Risolvo">YouTube</a><a href="https://www.instagram.com/RisolvoStudio/">Instagram</a><a href="https://www.tiktok.com/@RisolvoStudio">TikTok</a><a href="https://www.facebook.com/RisolvoStudio/">Facebook</a></div></footer>
     </div>
     
 </div>
