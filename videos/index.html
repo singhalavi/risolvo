@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#041326">
+  <title>Maths Video Playlists | Risolvo</title>
+  <meta name="description" content="Explore Risolvo maths videos by topic, from significant figures and surds to daily questions and spot-the-mistake challenges.">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="/"><img src="/assets/risolvo-logo.png" alt=""><span>Risolvo<em>.</em></span></a>
+    <div class="nav-links"><a href="/">Home</a><a href="/about-us/">About Us</a><a href="/videos/" aria-current="page">Videos</a><a href="/contact/">Contact</a><a class="portal-link" href="/portal/">Student Portal</a></div>
+  </nav></header>
+  <main id="main">
+    <section class="page-hero videos-hero"><div class="page-hero-inner"><div>
+      <div class="eyebrow">Watch · Practise · Learn</div>
+      <h1>Find your next maths video.</h1>
+      <p>Explore Risolvo playlists by topic. Pick a playlist to watch here, then continue on YouTube whenever you’re ready.</p>
+      <div class="actions"><a class="button" href="#playlist-library">Explore playlists <span aria-hidden="true">↓</span></a><a class="button secondary" href="https://www.youtube.com/@Risolvo" target="_blank" rel="noopener noreferrer">Visit Risolvo on YouTube ↗</a></div>
+    </div><div class="video-hero-mark" aria-hidden="true"><span>▶</span><small>Risolvo video library</small></div></div></section>
+    <section class="section playlist-section" id="playlist-library">
+      <div class="section-intro"><div class="eyebrow">The video library</div><h2>Choose a topic</h2><p>Search or filter the playlists to find a useful explanation, a quick challenge or a common mistake to spot.</p></div>
+      <div class="playlist-tools"><label class="playlist-search"><span aria-hidden="true">⌕</span><span class="visually-hidden">Search video topics</span><input id="playlistSearch" type="search" placeholder="Search topics…" autocomplete="off"></label><div class="playlist-filters" role="group" aria-label="Filter playlists"><button class="playlist-filter is-active" type="button" data-filter="all" aria-pressed="true">All topics</button><button class="playlist-filter" type="button" data-filter="skills" aria-pressed="false">Maths skills</button><button class="playlist-filter" type="button" data-filter="challenges" aria-pressed="false">Challenges</button></div></div>
+      <p class="playlist-count" id="playlistCount" aria-live="polite"></p>
+      <div class="playlist-grid" id="playlistGrid"></div>
+      <p class="playlist-empty" id="playlistEmpty" hidden>No playlists match that search. Try another topic.</p>
+    </section>
+    <section class="invite-note videos-invite"><div><div class="eyebrow">Keep learning with Risolvo</div><h2>New topics are on the way.</h2><p>Come back for more playlists, including upcoming topics such as Quadratics.</p></div><a class="button" href="https://www.youtube.com/@Risolvo?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe on YouTube ↗</a></section>
+  </main>
+  <footer class="site-footer">© Risolvo <span aria-hidden="true">·</span> <a href="/about-us/">About Us</a><a href="/contact/">Contact</a></footer>
+  <script>
+    // Add each new YouTube playlist here; category controls the filter chips above.
+    const playlists = [
+      { title: "Significant Figures", category: "skills", description: "Get confident rounding and writing numbers to a given number of significant figures.", id: "PLYG-wecAgWlo", videos: ["pU5hd98szEI", "gQrNCJL3bvc", "8qr8mw7VwcM", "hYG_I-CgfLQ", "6u5QBmIT9wY"] },
+      { title: "Surds", category: "skills", description: "Work through surd questions and build confidence with this essential maths topic.", id: "PLQzy9bsYaoXk", videos: ["_OSzPiSjn30", "FGoVDExhaIA"] },
+      { title: "Question of the Day", category: "challenges", description: "Try a quick question, think it through, then watch the explanation.", id: "PLJDNWeN6YZwg" },
+      { title: "Spot the Mistakes", category: "challenges", description: "Can you spot what went wrong? Pause, think, and compare your reasoning.", id: "PLQ8ahe_7CzXg" }
+    ];
+    const grid = document.getElementById("playlistGrid");
+    const search = document.getElementById("playlistSearch");
+    const count = document.getElementById("playlistCount");
+    const empty = document.getElementById("playlistEmpty");
+    let activeFilter = "all";
+    const esc = value => String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+    function renderPlaylists() {
+      const query = search.value.trim().toLocaleLowerCase();
+      const visible = playlists.filter(item => (activeFilter === "all" || item.category === activeFilter) && `${item.title} ${item.description}`.toLocaleLowerCase().includes(query));
+      grid.innerHTML = visible.map(item => {
+        const firstVideo = item.videos?.[0];
+        const playerSrc = firstVideo
+          ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(firstVideo)}?list=${encodeURIComponent(item.id)}`
+          : `https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(item.id)}`;
+        const videoChoices = item.videos?.length ? `<div class="playlist-video-list" role="group" aria-label="Videos in ${esc(item.title)}">${item.videos.map((video, index) => `<button class="playlist-video-button${index === 0 ? " is-selected" : ""}" type="button" data-video="${encodeURIComponent(video)}" aria-pressed="${index === 0}" aria-label="Play ${esc(item.title)}, video ${index + 1}"><img src="https://i.ytimg.com/vi/${encodeURIComponent(video)}/mqdefault.jpg" alt="" loading="lazy"><span>Video ${index + 1}</span></button>`).join("")}</div>` : "";
+        return `<article class="playlist-card"><div class="playlist-card-heading"><span class="playlist-type">${item.category === "skills" ? "Maths skills" : "Challenge"}</span><h3>${esc(item.title)}</h3><p>${esc(item.description)}</p></div><div class="playlist-player"><iframe src="${playerSrc}" title="${esc(item.title)} YouTube playlist" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${videoChoices}<a class="playlist-watch-link" href="https://www.youtube.com/playlist?list=${encodeURIComponent(item.id)}" target="_blank" rel="noopener noreferrer">Open playlist on YouTube <span aria-hidden="true">↗</span></a></article>`;
+      }).join("");
+      count.textContent = `${visible.length} ${visible.length === 1 ? "playlist" : "playlists"}`;
+      empty.hidden = visible.length !== 0;
+    }
+    document.querySelectorAll(".playlist-filter").forEach(button => button.addEventListener("click", () => {
+      activeFilter = button.dataset.filter;
+      document.querySelectorAll(".playlist-filter").forEach(item => { const selected = item === button; item.classList.toggle("is-active", selected); item.setAttribute("aria-pressed", String(selected)); });
+      renderPlaylists();
+    }));
+    search.addEventListener("input", renderPlaylists);
+    grid.addEventListener("click", event => {
+      const button = event.target.closest(".playlist-video-button");
+      if (!button) return;
+      const card = button.closest(".playlist-card");
+      const playlist = visiblePlaylistForCard(card);
+      if (!playlist) return;
+      const videoId = button.dataset.video;
+      card.querySelector("iframe").src = `https://www.youtube-nocookie.com/embed/${videoId}?list=${encodeURIComponent(playlist.id)}&autoplay=1`;
+      card.querySelectorAll(".playlist-video-button").forEach(item => {
+        const selected = item === button;
+        item.classList.toggle("is-selected", selected);
+        item.setAttribute("aria-pressed", String(selected));
+      });
+    });
+    function visiblePlaylistForCard(card) {
+      return playlists.find(item => card.querySelector(".playlist-card-heading h3")?.textContent === item.title);
+    }
+    renderPlaylists();
+  </script>
+</body>
+</html>
