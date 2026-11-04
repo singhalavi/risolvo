@@ -35,7 +35,15 @@
     // Add each new YouTube playlist here; category controls the filter chips above.
     const playlists = [
       { title: "Significant Figures", category: "skills", description: "Get confident rounding and writing numbers to a given number of significant figures.", id: "PLYG-wecAgWlo", videos: ["pU5hd98szEI", "gQrNCJL3bvc", "8qr8mw7VwcM", "hYG_I-CgfLQ", "6u5QBmIT9wY"] },
-      { title: "Surds", category: "skills", description: "Work through surd questions and build confidence with this essential maths topic.", id: "PLQzy9bsYaoXk", videos: ["_OSzPiSjn30", "FGoVDExhaIA"] },
+      { title: "Surds", category: "skills", description: "Work through surd questions and build confidence with this essential maths topic.", id: "PLQzy9bsYaoXk", videos: [
+        { id: "FGoVDExhaIA", title: "Episode 6 — Simplifying Surds" },
+        { id: "_OSzPiSjn30", title: "Episode 7 — Adding and Subtracting Surds" },
+        { id: "22T1mKQrbf8", title: "Episode 8 — Expanding Brackets with Surds" },
+        { id: "WVWZ3GauFgo", title: "Episode 9 — Rationalising the Denominator" }
+      ] },
+      { title: "Quadratics", category: "skills", description: "Start the quadratic expressions series with this introduction.", videos: [
+        { id: "EFzuUALejXY", title: "Introduction to Quadratic Expressions Made Easy" }
+      ] },
       { title: "Question of the Day", category: "challenges", description: "Try a quick question, think it through, then watch the explanation.", id: "PLJDNWeN6YZwg" },
       { title: "Spot the Mistakes", category: "challenges", description: "Can you spot what went wrong? Pause, think, and compare your reasoning.", id: "PLQ8ahe_7CzXg" }
     ];
@@ -47,14 +55,27 @@
     const esc = value => String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
     function renderPlaylists() {
       const query = search.value.trim().toLocaleLowerCase();
-      const visible = playlists.filter(item => (activeFilter === "all" || item.category === activeFilter) && `${item.title} ${item.description}`.toLocaleLowerCase().includes(query));
+      const visible = playlists.filter(item => {
+        const videoTitles = (item.videos || []).map(video => typeof video === "string" ? "" : video.title).join(" ");
+        return (activeFilter === "all" || item.category === activeFilter) && `${item.title} ${item.description} ${videoTitles}`.toLocaleLowerCase().includes(query);
+      });
       grid.innerHTML = visible.map(item => {
         const firstVideo = item.videos?.[0];
+        const firstVideoId = firstVideo && (typeof firstVideo === "string" ? firstVideo : firstVideo.id);
+        const playlistQuery = item.id ? `?list=${encodeURIComponent(item.id)}` : "";
         const playerSrc = firstVideo
-          ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(firstVideo)}?list=${encodeURIComponent(item.id)}`
+          ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(firstVideoId)}${playlistQuery}`
           : `https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(item.id)}`;
-        const videoChoices = item.videos?.length ? `<div class="playlist-video-list" role="group" aria-label="Videos in ${esc(item.title)}">${item.videos.map((video, index) => `<button class="playlist-video-button${index === 0 ? " is-selected" : ""}" type="button" data-video="${encodeURIComponent(video)}" aria-pressed="${index === 0}" aria-label="Play ${esc(item.title)}, video ${index + 1}"><img src="https://i.ytimg.com/vi/${encodeURIComponent(video)}/mqdefault.jpg" alt="" loading="lazy"><span>Video ${index + 1}</span></button>`).join("")}</div>` : "";
-        return `<article class="playlist-card"><div class="playlist-card-heading"><span class="playlist-type">${item.category === "skills" ? "Maths skills" : "Challenge"}</span><h3>${esc(item.title)}</h3><p>${esc(item.description)}</p></div><div class="playlist-player"><iframe src="${playerSrc}" title="${esc(item.title)} YouTube playlist" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${videoChoices}<a class="playlist-watch-link" href="https://www.youtube.com/playlist?list=${encodeURIComponent(item.id)}" target="_blank" rel="noopener noreferrer">Open playlist on YouTube <span aria-hidden="true">↗</span></a></article>`;
+        const watchUrl = item.id
+          ? `https://www.youtube.com/playlist?list=${encodeURIComponent(item.id)}`
+          : `https://www.youtube.com/watch?v=${encodeURIComponent(firstVideoId)}`;
+        const watchLabel = item.id ? "Open playlist on YouTube" : "Watch on YouTube";
+        const videoChoices = item.videos?.length ? `<div class="playlist-video-list" role="group" aria-label="Videos in ${esc(item.title)}">${item.videos.map((video, index) => {
+          const videoId = typeof video === "string" ? video : video.id;
+          const videoTitle = typeof video === "string" ? `Video ${index + 1}` : video.title;
+          return `<button class="playlist-video-button${index === 0 ? " is-selected" : ""}" type="button" data-video="${encodeURIComponent(videoId)}" aria-pressed="${index === 0}" aria-label="Play ${esc(videoTitle)}"><img src="https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/mqdefault.jpg" alt="" loading="lazy"><span>${esc(videoTitle)}</span></button>`;
+        }).join("")}</div>` : "";
+        return `<article class="playlist-card"><div class="playlist-card-heading"><span class="playlist-type">${item.category === "skills" ? "Maths skills" : "Challenge"}</span><h3>${esc(item.title)}</h3><p>${esc(item.description)}</p></div><div class="playlist-player"><iframe src="${playerSrc}" title="${esc(item.title)} YouTube videos" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${videoChoices}<a class="playlist-watch-link" href="${watchUrl}" target="_blank" rel="noopener noreferrer">${watchLabel} <span aria-hidden="true">↗</span></a></article>`;
       }).join("");
       count.textContent = `${visible.length} ${visible.length === 1 ? "playlist" : "playlists"}`;
       empty.hidden = visible.length !== 0;
@@ -72,7 +93,8 @@
       const playlist = visiblePlaylistForCard(card);
       if (!playlist) return;
       const videoId = button.dataset.video;
-      card.querySelector("iframe").src = `https://www.youtube-nocookie.com/embed/${videoId}?list=${encodeURIComponent(playlist.id)}&autoplay=1`;
+      const playlistQuery = playlist.id ? `&list=${encodeURIComponent(playlist.id)}` : "";
+      card.querySelector("iframe").src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1${playlistQuery}`;
       card.querySelectorAll(".playlist-video-button").forEach(item => {
         const selected = item === button;
         item.classList.toggle("is-selected", selected);
