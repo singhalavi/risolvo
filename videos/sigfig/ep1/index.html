@@ -4,14 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="refresh" content="0;url=https://www.youtube.com/watch?v=6u5QBmIT9wY">
   <title>Significant Figures | Risolvo</title>
   <script>
-    window.location.replace("https://www.youtube.com/watch?v=6u5QBmIT9wY");
+    const youtubeUrl = "https://www.youtube.com/watch?v=6u5QBmIT9wY";
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if (isAndroid) {
+      const fallback = encodeURIComponent(youtubeUrl);
+      window.location.replace(`intent://www.youtube.com/watch?v=6u5QBmIT9wY#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${fallback};end`);
+    } else {
+      // YouTube links use iOS Universal Links and open in the YouTube app when enabled.
+      window.location.replace(youtubeUrl);
+    }
   </script>
 </head>
 <body>
   <p>Opening the Significant Figures video…</p>
-  <p><a href="https://www.youtube.com/watch?v=6u5QBmIT9wY">Tap here if the video does not open automatically.</a></p>
+  <p><a href="https://www.youtube.com/watch?v=6u5QBmIT9wY">Open the video on YouTube</a></p>
 </body>
 </html>
