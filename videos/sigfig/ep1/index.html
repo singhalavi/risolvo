@@ -11,6 +11,42 @@
   <meta property="og:url" content="https://risolvo.co.uk/videos/sigfig/ep1">
   <meta property="og:image" content="https://i.ytimg.com/vi/6u5QBmIT9wY/maxresdefault.jpg">
 
+  <script>
+    (function () {
+      var videoId = "6u5QBmIT9wY";
+      var webUrl = "https://www.youtube.com/watch?v=" + videoId;
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      // Leave the landing page visible to social preview crawlers so they can read its Open Graph tags.
+      if (/facebookexternalhit|Facebot|Twitterbot|WhatsApp|LinkedInBot|Slackbot|TelegramBot/i.test(ua)) {
+        return;
+      }
+
+      var isAndroid = /android/i.test(ua);
+      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+      if (isAndroid) {
+        var intentUrl =
+          "intent://www.youtube.com/watch?v=" + videoId +
+          "#Intent;package=com.google.android.youtube;scheme=https;" +
+          "S.browser_fallback_url=" + encodeURIComponent(webUrl) + ";end";
+        window.location.replace(intentUrl);
+      } else if (isIOS) {
+        var iosAppUrl = "youtube://watch?v=" + videoId;
+        var start = Date.now();
+        window.location.href = iosAppUrl;
+
+        setTimeout(function () {
+          if (!document.hidden && Date.now() - start < 2000) {
+            window.location.replace(webUrl);
+          }
+        }, 1200);
+      } else {
+        window.location.replace(webUrl);
+      }
+    })();
+  </script>
+
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -76,42 +112,5 @@
       Open Video on YouTube
     </a>
   </div>
-
-  <script>
-    (function () {
-      var videoId = "6u5QBmIT9wY";
-      var webUrl = "https://www.youtube.com/watch?v=" + videoId;
-      var ua = navigator.userAgent || navigator.vendor || window.opera;
-      var isAndroid = /android/i.test(ua);
-      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-
-      document.getElementById("fallback-link").href = webUrl;
-
-      function triggerRedirect() {
-        if (isAndroid) {
-          var intentUrl =
-            "intent://www.youtube.com/watch?v=" + videoId +
-            "#Intent;package=com.google.android.youtube;scheme=https;" +
-            "S.browser_fallback_url=" + encodeURIComponent(webUrl) + ";end";
-          window.location.replace(intentUrl);
-        } else if (isIOS) {
-          var iosAppUrl = "vnd.youtube://www.youtube.com/watch?v=" + videoId;
-          var start = Date.now();
-          window.location.href = iosAppUrl;
-
-          setTimeout(function () {
-            if (!document.hidden && Date.now() - start < 2000) {
-              window.location.replace(webUrl);
-            }
-          }, 1400);
-        } else {
-          window.location.replace(webUrl);
-        }
-      }
-
-      // Give analytics and ad pixels time to record the landing page view.
-      setTimeout(triggerRedirect, 400);
-    })();
-  </script>
 </body>
 </html>
