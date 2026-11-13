@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Significant Figures — GCSE Maths Walkthrough | Risolvo</title>
 
+  <!-- Open Graph tags for Facebook, WhatsApp & Meta Ad Review -->
   <meta property="og:type" content="video.other">
   <meta property="og:title" content="Significant Figures — GCSE Maths Walkthrough | Risolvo">
   <meta property="og:description" content="Watch the step-by-step GCSE Maths walkthrough on Significant Figures on YouTube.">
@@ -12,80 +13,89 @@
   <meta property="og:image" content="https://i.ytimg.com/vi/6u5QBmIT9wY/maxresdefault.jpg">
 
   <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '2095663997778734');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=2095663997778734&ev=PageView&noscript=1"
-    alt=""></noscript>
-
-  <script>
     (function () {
-      var targetUrl = "https://to.mysocial.io/s/0m_Ot1cCk";
+      var videoId = "6u5QBmIT9wY";
+      var webUrl = "https://www.youtube.com/watch?v=" + videoId;
       var ua = navigator.userAgent || navigator.vendor || window.opera;
 
-      // Keep the landing page visible to social preview crawlers so they can read its Open Graph tags.
+      // Let social preview bots read Open Graph tags without redirecting.
       if (/facebookexternalhit|Facebot|Twitterbot|WhatsApp|LinkedInBot|Slackbot|TelegramBot/i.test(ua)) {
         return;
       }
 
-      setTimeout(function () {
-        window.location.replace(targetUrl);
-      }, 300);
+      var isAndroid = /android/i.test(ua);
+      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+      function openSchemeViaIframe(uri) {
+        var iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        iframe.src = uri;
+        document.documentElement.appendChild(iframe);
+        setTimeout(function () {
+          if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+        }, 1000);
+      }
+
+      if (isAndroid) {
+        // Trigger the native YouTube scheme, then use Android Intent with web fallback.
+        openSchemeViaIframe("vnd.youtube:" + videoId);
+        var intentUrl =
+          "intent://www.youtube.com/watch?v=" + videoId +
+          "#Intent;package=com.google.android.youtube;scheme=https;" +
+          "S.browser_fallback_url=" + encodeURIComponent(webUrl) + ";end";
+        window.location.replace(intentUrl);
+      } else if (isIOS) {
+        var start = Date.now();
+
+        // Try the YouTube app schemes for iOS browsers and embedded web views.
+        openSchemeViaIframe("vnd.youtube://" + videoId);
+        window.location.href = "vnd.youtube://" + videoId;
+
+        setTimeout(function () {
+          if (!document.hidden) {
+            window.location.href = "youtube://watch?v=" + videoId;
+          }
+        }, 250);
+
+        setTimeout(function () {
+          if (!document.hidden && Date.now() - start < 2500) {
+            window.location.replace(webUrl);
+          }
+        }, 1600);
+      } else {
+        window.location.replace(webUrl);
+      }
     })();
   </script>
 
-  <noscript>
-    <meta http-equiv="refresh" content="0;url=https://to.mysocial.io/s/0m_Ot1cCk">
-  </noscript>
-
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       margin: 0;
-      padding: 24px;
-      background-color: #f9fafb;
+      padding: 20px;
+      background: #f9fafb;
       color: #111827;
       text-align: center;
     }
     .card {
       background: #ffffff;
-      padding: 32px 28px;
+      padding: 28px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-      max-width: 400px;
+      max-width: 380px;
       width: 100%;
-    }
-    h1 {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 0 0 8px;
-    }
-    p {
-      font-size: 14px;
-      color: #4b5563;
-      margin: 0 0 20px;
     }
     .btn {
       display: inline-block;
-      background-color: #ff0000;
+      margin-top: 16px;
+      background: #ff0000;
       color: #ffffff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 14px;
       padding: 12px 20px;
       border-radius: 8px;
     }
@@ -93,11 +103,22 @@
 </head>
 <body>
   <div class="card">
-    <h1>Opening YouTube…</h1>
-    <p>Redirecting you to the Significant Figures walkthrough.</p>
-    <a class="btn" href="https://to.mysocial.io/s/0m_Ot1cCk">
-      Open Video on YouTube
-    </a>
+    <h1 style="font-size:18px;margin:0 0 8px;">Opening YouTube…</h1>
+    <p style="font-size:14px;color:#4b5563;margin:0;">Tap below if the app doesn't open automatically.</p>
+    <a id="manual-btn" class="btn" href="vnd.youtube://6u5QBmIT9wY">Open in YouTube App</a>
   </div>
+
+  <script>
+    // Match the manual fallback link to the visitor's operating system.
+    (function () {
+      var ua = navigator.userAgent || "";
+      var btn = document.getElementById("manual-btn");
+      if (/android/i.test(ua)) {
+        btn.href = "intent://www.youtube.com/watch?v=6u5QBmIT9wY#Intent;package=com.google.android.youtube;scheme=https;end";
+      } else if (!(/iPad|iPhone|iPod/.test(ua))) {
+        btn.href = "https://www.youtube.com/watch?v=6u5QBmIT9wY";
+      }
+    })();
+  </script>
 </body>
 </html>
