@@ -12,40 +12,40 @@
   <meta property="og:image" content="https://i.ytimg.com/vi/6u5QBmIT9wY/maxresdefault.jpg">
 
   <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2095663997778734');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=2095663997778734&ev=PageView&noscript=1"
+    alt=""></noscript>
+
+  <script>
     (function () {
-      var videoId = "6u5QBmIT9wY";
-      var webUrl = "https://www.youtube.com/watch?v=" + videoId;
+      var targetUrl = "https://to.mysocial.io/s/0m_Ot1cCk";
       var ua = navigator.userAgent || navigator.vendor || window.opera;
 
-      // Leave the landing page visible to social preview crawlers so they can read its Open Graph tags.
+      // Keep the landing page visible to social preview crawlers so they can read its Open Graph tags.
       if (/facebookexternalhit|Facebot|Twitterbot|WhatsApp|LinkedInBot|Slackbot|TelegramBot/i.test(ua)) {
         return;
       }
 
-      var isAndroid = /android/i.test(ua);
-      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-
-      if (isAndroid) {
-        var intentUrl =
-          "intent://www.youtube.com/watch?v=" + videoId +
-          "#Intent;package=com.google.android.youtube;scheme=https;" +
-          "S.browser_fallback_url=" + encodeURIComponent(webUrl) + ";end";
-        window.location.replace(intentUrl);
-      } else if (isIOS) {
-        var iosAppUrl = "youtube://watch?v=" + videoId;
-        var start = Date.now();
-        window.location.href = iosAppUrl;
-
-        setTimeout(function () {
-          if (!document.hidden && Date.now() - start < 2000) {
-            window.location.replace(webUrl);
-          }
-        }, 1200);
-      } else {
-        window.location.replace(webUrl);
-      }
+      setTimeout(function () {
+        window.location.replace(targetUrl);
+      }, 300);
     })();
   </script>
+
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=https://to.mysocial.io/s/0m_Ot1cCk">
+  </noscript>
 
   <style>
     body {
@@ -68,18 +68,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
       max-width: 400px;
       width: 100%;
-    }
-    .spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid #e5e7eb;
-      border-top-color: #ff0000;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 16px;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
     }
     h1 {
       font-size: 18px;
@@ -105,10 +93,9 @@
 </head>
 <body>
   <div class="card">
-    <div class="spinner" aria-hidden="true"></div>
     <h1>Opening YouTube…</h1>
     <p>Redirecting you to the Significant Figures walkthrough.</p>
-    <a id="fallback-link" class="btn" href="https://www.youtube.com/watch?v=6u5QBmIT9wY">
+    <a class="btn" href="https://to.mysocial.io/s/0m_Ot1cCk">
       Open Video on YouTube
     </a>
   </div>
