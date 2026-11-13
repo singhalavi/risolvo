@@ -5,68 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Significant Figures — GCSE Maths Walkthrough | Risolvo</title>
 
-  <!-- Open Graph tags for Facebook, WhatsApp & Meta Ad Review -->
   <meta property="og:type" content="video.other">
   <meta property="og:title" content="Significant Figures — GCSE Maths Walkthrough | Risolvo">
   <meta property="og:description" content="Watch the step-by-step GCSE Maths walkthrough on Significant Figures on YouTube.">
-  <meta property="og:url" content="https://risolvo.co.uk/videos/sigfig/ep1">
+  <meta property="og:url" content="https://risolvo.co.uk/videos/sigfig/ep1/">
   <meta property="og:image" content="https://i.ytimg.com/vi/6u5QBmIT9wY/maxresdefault.jpg">
-
-  <script>
-    (function () {
-      var videoId = "6u5QBmIT9wY";
-      var webUrl = "https://www.youtube.com/watch?v=" + videoId;
-      var ua = navigator.userAgent || navigator.vendor || window.opera;
-
-      // Let social preview bots read Open Graph tags without redirecting.
-      if (/facebookexternalhit|Facebot|Twitterbot|WhatsApp|LinkedInBot|Slackbot|TelegramBot/i.test(ua)) {
-        return;
-      }
-
-      var isAndroid = /android/i.test(ua);
-      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-
-      function openSchemeViaIframe(uri) {
-        var iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = uri;
-        document.documentElement.appendChild(iframe);
-        setTimeout(function () {
-          if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-        }, 1000);
-      }
-
-      if (isAndroid) {
-        // Trigger the native YouTube scheme, then use Android Intent with web fallback.
-        openSchemeViaIframe("vnd.youtube:" + videoId);
-        var intentUrl =
-          "intent://www.youtube.com/watch?v=" + videoId +
-          "#Intent;package=com.google.android.youtube;scheme=https;" +
-          "S.browser_fallback_url=" + encodeURIComponent(webUrl) + ";end";
-        window.location.replace(intentUrl);
-      } else if (isIOS) {
-        var start = Date.now();
-
-        // Try the YouTube app schemes for iOS browsers and embedded web views.
-        openSchemeViaIframe("vnd.youtube://" + videoId);
-        window.location.href = "vnd.youtube://" + videoId;
-
-        setTimeout(function () {
-          if (!document.hidden) {
-            window.location.href = "youtube://watch?v=" + videoId;
-          }
-        }, 250);
-
-        setTimeout(function () {
-          if (!document.hidden && Date.now() - start < 2500) {
-            window.location.replace(webUrl);
-          }
-        }, 1600);
-      } else {
-        window.location.replace(webUrl);
-      }
-    })();
-  </script>
 
   <style>
     body {
@@ -96,7 +39,7 @@
       color: #ffffff;
       text-decoration: none;
       font-weight: 600;
-      padding: 12px 20px;
+      padding: 14px 22px;
       border-radius: 8px;
     }
   </style>
@@ -104,19 +47,40 @@
 <body>
   <div class="card">
     <h1 style="font-size:18px;margin:0 0 8px;">Opening YouTube…</h1>
-    <p style="font-size:14px;color:#4b5563;margin:0;">Tap below if the app doesn't open automatically.</p>
-    <a id="manual-btn" class="btn" href="vnd.youtube://6u5QBmIT9wY">Open in YouTube App</a>
+    <p style="font-size:14px;color:#4b5563;margin:0;">Tap below if the YouTube app doesn't open automatically.</p>
+    <a id="yt-link" class="btn" href="https://youtu.be/6u5QBmIT9wY" target="_blank" rel="noopener noreferrer">
+      Open Video in YouTube
+    </a>
   </div>
 
   <script>
-    // Match the manual fallback link to the visitor's operating system.
     (function () {
-      var ua = navigator.userAgent || "";
-      var btn = document.getElementById("manual-btn");
-      if (/android/i.test(ua)) {
-        btn.href = "intent://www.youtube.com/watch?v=6u5QBmIT9wY#Intent;package=com.google.android.youtube;scheme=https;end";
-      } else if (!(/iPad|iPhone|iPod/.test(ua))) {
-        btn.href = "https://www.youtube.com/watch?v=6u5QBmIT9wY";
+      var videoId = "6u5QBmIT9wY";
+      var universalUrl = "https://youtu.be/" + videoId;
+      var webUrl = "https://www.youtube.com/watch?v=" + videoId;
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/facebookexternalhit|Facebot|Twitterbot|WhatsApp|LinkedInBot|Slackbot|TelegramBot/i.test(ua)) {
+        return;
+      }
+
+      var isAndroid = /android/i.test(ua);
+      var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      var link = document.getElementById("yt-link");
+
+      if (isAndroid) {
+        var intentUrl =
+          "intent://youtu.be/" + videoId +
+          "#Intent;package=com.google.android.youtube;scheme=https;" +
+          "S.browser_fallback_url=" + encodeURIComponent(webUrl) + ";end";
+        link.href = intentUrl;
+        window.location.replace(intentUrl);
+      } else if (isIOS) {
+        link.href = universalUrl;
+        window.location.href = universalUrl;
+      } else {
+        link.href = webUrl;
+        window.location.replace(webUrl);
       }
     })();
   </script>
